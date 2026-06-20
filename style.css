@@ -16,10 +16,19 @@ body {
     background-color: var(--bg-clean);
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: var(--text-main);
-    overflow-x: hidden; /* Prevents off-screen pendulum swings from causing side-scrolling */
+    overflow-x: hidden;
 }
 
-/* TOP PERSISTENT FLOATING HEADER BAR */
+
+#trail-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none; 
+    z-index: 999;
+}
+
+
 .top-status-bar {
     position: fixed;
     top: 14px; left: 14px; right: 14px;
@@ -39,7 +48,7 @@ body {
 }
 .music-pill { cursor: pointer; color: var(--accent-rose); }
 
-/* MOBILE HERO WELCOME CONTAINER */
+
 .mobile-hero {
     height: 85vh;
     display: flex;
@@ -57,45 +66,40 @@ body {
 .hero-text-block p { font-size: 14px; color: #71717a; max-width: 290px; margin: 0 auto; line-height: 1.5; }
 .bouncing-indicator { margin-top: 35px; font-size: 20px; animation: verticalBounce 2s infinite; color: #a1a1aa; }
 
-/* ==========================================================================
-   FLUID SCROLL TIMELINE ARCHITECTURE (RESPONSIVE ENGINE)
-   ========================================================================== */
+
 .mobile-timeline {
     width: 100%;
-    max-width: 600px; /* Expands beautifully on larger viewport tracking screens */
+    max-width: 600px;
     margin: 0 auto;
     padding: 40px 16px 160px 16px;
     display: flex;
     flex-direction: column;
-    gap: clamp(80px, 15vw, 130px); /* Dynamically scales card spacing based on viewport size */
+    gap: clamp(90px, 18vw, 140px);
 }
 
-/* PENDULUM SWING ANIMATION CONFIGURATION */
+
 .timeline-card {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
-    opacity: 0;
-    transition: transform 1.3s cubic-bezier(0.25, 1.1, 0.5, 1), opacity 0.8s ease;
-    will-change: transform, opacity;
-}
-.reveal-from-left { 
-    transform-origin: bottom left;
-    transform: rotate(-90deg) translateY(60px); 
-}
-.reveal-from-right { 
-    transform-origin: bottom right;
-    transform: rotate(90deg) translateY(60px); 
-}
-.timeline-card.is-visible { 
-    opacity: 1; 
-    transform: rotate(0deg) translateY(0); 
 }
 
-/* THE MAIN FOCUS MESSAGE PLATES */
+
+.left-swing-card .sticky-note-photo {
+    transform-origin: bottom left;
+    will-change: transform;
+}
+
+
+.right-swing-card .sticky-note-photo {
+    transform-origin: bottom right;
+    will-change: transform;
+}
+
+
 .card-caption.main-focus {
-    width: 82%; /* Leaves a safe 18% structural gutter so text is never crushed */
+    width: 82%;
     background: var(--card-bg);
     padding: clamp(16px, 5vw, 24px);
     border-radius: 24px;
@@ -103,28 +107,25 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.01);
     position: relative;
     z-index: 10;
+    opacity: 0; 
+    will-change: opacity, transform;
 }
-/* Safety margins to guarantee overlapping sticky notes never cover up actual text words */
-.reveal-from-left .card-caption.main-focus {
-    margin-right: 18%;
-}
-.reveal-from-right .card-caption.main-focus {
-    align-self: flex-end;
-    margin-left: 18%;
-}
+.left-swing-card .card-caption.main-focus { margin-right: 18%; }
+.right-swing-card .card-caption.main-focus { align-self: flex-end; margin-left: 18%; }
 
 .meta-label { font-size: 9px; font-weight: 800; color: #a1a1aa; letter-spacing: 1px; display: block; margin-bottom: 4px; }
 .card-caption h3 { margin: 0 0 6px 0; font-size: clamp(16px, 4vw, 19px); font-weight: 700; }
 .card-caption p { margin: 0; font-size: clamp(13px, 3.5vw, 14.5px); color: #52525b; line-height: 1.55; }
 
-/* FLUID STICKY NOTE PHOTO LAYERS (FIXED THE MASKS/CLIPPING) */
+
 .sticky-note-photo {
     position: absolute;
-    width: 28%; /* Uses percentage width so it scales proportionally down on small phone grids */
-    max-width: 130px; /* Stops it from scaling up excessively on huge viewports */
-    min-width: 85px;  /* Prevents it from shrinking into an unreadable dot on tiny devices */
+    width: 28%;
+    max-width: 130px;
+    min-width: 85px;
     z-index: 20;
     top: -35px;
+    will-change: transform;
 }
 .pin-right { right: 0; }
 .pin-left { left: 0; }
@@ -137,11 +138,9 @@ body {
     position: relative;
     border: 1px solid rgba(0,0,0,0.02);
 }
-.pin-right .polaroid-body { transform: rotate(7deg); }
-.pin-left .polaroid-body { transform: rotate(-6deg); }
 .polaroid-body img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
 
-/* INLINE VINE FRAME SYSTEMS */
+
 .vine-frame-container {
     position: absolute;
     top: -5px; left: -5px;
@@ -149,12 +148,18 @@ body {
     pointer-events: none;
     z-index: 25;
 }
+.grow-vine-path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100; 
+    will-change: stroke-dashoffset;
+}
 .blooming-blossom {
     transform-origin: center;
-    animation: blossomBreathe 4s ease-in-out infinite alternate;
+    opacity: 0; 
+    will-change: opacity, transform;
 }
 
-/* INTERACTIVE ENGINE CENTERING CARDS */
+
 .interactive-center-card {
     background: var(--card-bg);
     border-radius: 24px; padding: 24px; text-align: center;
@@ -173,7 +178,7 @@ body {
 }
 .native-mobile-btn:disabled { background: #e4e4e7; color: #a1a1aa; }
 
-/* THE RANDOM ENVELOPE MODALS */
+
 .sparkle-icon { font-size: 28px; margin-bottom: 6px; }
 .interactive-slab {
     background: linear-gradient(135deg, #fff0f3 0%, #fef3c7 100%);
@@ -187,7 +192,7 @@ body {
 .hidden-fortune { display: none !important; }
 #fortune-text { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--text-main); font-style: italic; }
 
-/* SPOTIFY STYLE APP BOTTOM MUSIC DOCK SYSTEM */
+
 #app-music-dock {
     position: fixed; bottom: 0; left: 0; right: 0;
     background: #18181b; color: white; z-index: 100;
@@ -212,32 +217,20 @@ body {
 #app-music-dock.dock-expanded .dock-video-payload { max-height: 260px; }
 #app-music-dock.dock-expanded .chevron-arrow { transform: rotate(180deg); }
 
-/* ==========================================================================
-   DESKTOP & TABLET MEDIA QUERY (FOR LARGER MONITORS / LANDSCAPE MODES)
-   ========================================================================== */
+
 @media (min-width: 768px) {
-    .mobile-timeline {
-        max-width: 800px; /* Opens up the canvas completely */
-    }
-    .card-caption.main-focus {
-        width: 70%; /* Adjusts text block sizing to give look and feel room */
-    }
-    .sticky-note-photo {
-        width: 150px;
-        max-width: 150px;
-        top: -30px;
-    }
-    .pin-right { right: -20px; } /* Lets photos elegantly float outside container frame bounds */
-    .pin-left { left: -20px; }
-    
-    #app-music-dock {
-        left: auto; right: 24px; bottom: 24px;
-        width: 340px; border-radius: 16px;
-    }
+    .mobile-timeline { max-width: 800px; }
+    .card-caption.main-focus { width: 70%; }
+    .sticky-note-photo { width: 150px; max-width: 150px; top: -30px; }
+    .pin-right { right: -25px; }
+    .pin-left { left: -25px; }
+    #app-music-dock { left: auto; right: 24px; bottom: 24px; width: 340px; border-radius: 16px; }
 }
 
-/* COMPILER ANIMATION LOOPS KEYFRAMES */
+
+@media (prefers-reduced-motion: no-preference) {
+    .bouncing-indicator { animation: verticalBounce 2s infinite; }
+}
 @keyframes verticalBounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } 60% { transform: translateY(-3px); } }
 @keyframes soundWave { from { height: 20%; } to { height: 100%; } }
 @keyframes slideUpFrame { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes blossomBreathe { 0% { transform: scale(0.95) rotate(-2deg); } 100% { transform: scale(1.05) rotate(3deg); } }
