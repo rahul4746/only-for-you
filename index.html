@@ -8,6 +8,8 @@
 </head>
 <body>
 
+    <canvas id="trail-canvas"></canvas>
+
     <div class="top-status-bar">
         <div class="streak-pill">🔥 <span id="streak-count">1</span> Day Streak</div>
         <div class="music-pill" onclick="toggleMobileMusic()">🎵 Play Music</div>
@@ -24,7 +26,7 @@
 
     <main class="mobile-timeline">
 
-        <section class="timeline-card reveal-from-left">
+        <section class="timeline-card left-swing-card">
             <div class="card-caption main-focus">
                 <span class="meta-label">MOMENT 01</span>
                 <h3>The Bright Days ☀️</h3>
@@ -36,10 +38,8 @@
                     <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=400&auto=format&fit=crop" alt="Blooms">
                     
                     <svg class="vine-frame-container" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 10,110 C 5,60 15,20 110,10" stroke="#81b29a" stroke-width="2" stroke-linecap="round" fill="none"/>
-                        <path d="M 12,80 C 18,75 14,60 8,65" stroke="#81b29a" stroke-width="1.5" fill="none"/>
-                        <path d="M 10,40 Q 2,35 10,30 Q 18,35 10,40 Z" fill="#a3b18a"/>
-                        <path d="M 60,10 Q 65,2 70,10 Q 65,18 60,10 Z" fill="#a3b18a"/>
+                        <path class="grow-vine-path" pathLength="100" d="M 10,110 C 5,60 15,20 110,10" stroke="#81b29a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <path class="grow-vine-path" pathLength="100" d="M 12,80 C 18,75 14,60 8,65" stroke="#81b29a" stroke-width="1.5" fill="none"/>
                         
                         <g class="blooming-blossom" transform="translate(110, 10)">
                             <circle cx="-10" cy="0" r="6" fill="#ffe5ec"/>
@@ -48,8 +48,6 @@
                             <circle cx="0" cy="10" r="6" fill="#ffe5ec"/>
                             <circle cx="-7" cy="-7" r="6" fill="#ffe5ec"/>
                             <circle cx="7" cy="7" r="6" fill="#ffe5ec"/>
-                            <circle cx="7" cy="-7" r="6" fill="#ffe5ec"/>
-                            <circle cx="-7" cy="7" r="6" fill="#ffe5ec"/>
                             <circle cx="0" cy="0" r="5" fill="#ffb3c1"/>
                             <circle cx="0" cy="0" r="2.5" fill="#ff758f"/>
                         </g>
@@ -79,14 +77,13 @@
             <button class="native-mobile-btn" id="water-btn" onclick="waterPlant()">Water Today's Growth 💧</button>
         </section>
 
-        <section class="timeline-card reveal-from-right">
+        <section class="timeline-card right-swing-card">
             <div class="sticky-note-photo pin-left">
                 <div class="polaroid-body">
                     <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?q=80&w=400&auto=format&fit=crop" alt="Sunflowers">
                     
                     <svg class="vine-frame-container" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 110,110 C 115,60 105,20 10,10" stroke="#81b29a" stroke-width="2" stroke-linecap="round" fill="none"/>
-                        <path d="M 110,40 Q 118,35 110,30 Q 102,35 110,40 Z" fill="#a3b18a"/>
+                        <path class="grow-vine-path" pathLength="100" d="M 110,110 C 115,60 105,20 10,10" stroke="#81b29a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                         
                         <g class="blooming-blossom" transform="translate(10, 10)">
                             <circle cx="-9" cy="0" r="6" fill="#fef3c7"/>
